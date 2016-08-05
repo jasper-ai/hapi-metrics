@@ -1,6 +1,6 @@
 {
   "name": "jasper-hapi-metrics",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Metrics endpoint for hapi servers",
   "main": "lib/index.js",
   "scripts": {
