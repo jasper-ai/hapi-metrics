@@ -29,16 +29,15 @@ function stringifyLoadAvg (avgs) {
 
 module.exports.register = (server, {
   tags: tags = [],
-  auth: auth = false,
-  scope: scope
+  auth: auth = false
 }, next) => {
   server.route([
     {
       method: 'GET',
       path: '/metrics',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({
             upTime: stringifySeconds(convertUptimeToSeconds(process.uptime())),
@@ -58,8 +57,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/uptime',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({ upTime: stringifySeconds(convertUptimeToSeconds(process.uptime())) })
         }
@@ -70,8 +69,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/totalmem',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({ totalMem: stringifyMegabytes(convertBytesToMegaBytes(os.totalmem())) })
         }
@@ -82,8 +81,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/loadavg',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({ loadAvg: stringifyLoadAvg(os.loadavg()) })
         }
@@ -94,8 +93,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/serverload',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({
             eventLoopDelay: stringifyMilliseconds(server.load.eventLoopDelay),
@@ -110,8 +109,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/serverload/eventloopdelay',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({
             eventLoopDelay: stringifyMilliseconds(server.load.eventLoopDelay)
@@ -124,8 +123,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/serverload/heapused',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({
             heapUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.heapUsed))
@@ -138,8 +137,8 @@ module.exports.register = (server, {
       method: 'GET',
       path: '/metrics/serverload/memused',
       config: {
+        auth,
         tags,
-        auth: (scope) ? { scope } : auth,
         handler (req, reply) {
           reply({
             memUsed: stringifyMegabytes(convertBytesToMegaBytes(server.load.rss))
